@@ -1,11 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { Phone, MapPin } from "lucide-react";
 import { fadeUpVariant, staggerContainer, viewportOnce } from "@/lib/animations";
 import { SITE, whatsappLink } from "@/lib/constants";
-import { InquiryForm } from "@/components/InquiryForm";
 import type { SiteSettings } from "@/types";
+
+// Formular liegt unter dem Fold -> lazy laden, hält den initialen Bundle klein.
+const InquiryForm = dynamic(
+  () => import("@/components/InquiryForm").then((m) => m.InquiryForm),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse" aria-hidden="true">
+        <div className="mb-10 flex items-center gap-2">
+          {[1, 2, 3].map((s) => (
+            <div key={s} className="flex items-center gap-2">
+              <div className="h-7 w-7 border border-mist" />
+              {s < 3 && <div className="h-px w-8 bg-mist" />}
+            </div>
+          ))}
+        </div>
+        <div className="mb-6 h-7 w-56 bg-mist/60" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-24 bg-mist/40" />
+          ))}
+        </div>
+      </div>
+    ),
+  },
+);
 
 export function ContactSection({ settings }: { settings: SiteSettings }) {
   const phone = settings.contact_phone;
