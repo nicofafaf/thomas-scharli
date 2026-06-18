@@ -3,34 +3,52 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, Loader2, CheckCircle2 } from "lucide-react";
+import { X, Loader2, CheckCircle2, ThumbsUp, ThumbsDown } from "lucide-react";
 import toast from "react-hot-toast";
 import { StarRating } from "./StarRating";
 import { reviewSchema } from "@/lib/validation";
-import { projectImageSrc } from "@/lib/utils";
-import type { Project } from "@/types";
+import { projectImageSrc, cn } from "@/lib/utils";
+import type { Project, ServiceType } from "@/types";
 
 interface ReviewModalProps {
-  project: Project | null;
+  /** Vorab gebundenes Projekt (Bewertung von einer Projektkarte aus) */
+  project?: Project | null;
+  /** Für die Direktbewertung: optionale Projektauswahl */
+  projects?: Project[];
   open: boolean;
   onClose: () => void;
 }
 
 type FieldErrors = Partial<
-  Record<"author_name" | "email" | "rating" | "comment", string>
+  Record<"author_name" | "email" | "rating" | "comment" | "service_type", string>
 >;
 
-export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
+const SERVICE_TILES: { key: ServiceType; icon: string; label: string }[] = [
+  { key: "Zweiradtransport", icon: "🛵", label: "Zweirad­transport" },
+  { key: "Umzug", icon: "📦", label: "Umzug" },
+  { key: "Netzmontage", icon: "🔧", label: "Netz­montage" },
+  { key: "Fahrzeugtransport", icon: "🚗", label: "Fahrzeug­transport" },
+  { key: "Sonstiges", icon: "➕", label: "Sonstiges" },
+];
+
+export function ReviewModal({
+  project,
+  projects = [],
+  open,
+  onClose,
+}: ReviewModalProps) {
   const [authorName, setAuthorName] = useState("");
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [serviceType, setServiceType] = useState<ServiceType | "">("");
+  const [wouldRecommend, setWouldRecommend] = useState(true);
+  const [selectedProjectId, setSelectedProjectId] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Formular zuruecksetzen, wenn Projekt wechselt / Modal schliesst
   useEffect(() => {
     if (open) {
       setAuthorName("");
@@ -38,12 +56,14 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
       setEmail("");
       setRating(0);
       setComment("");
+      setServiceType(project ? guessServiceType(project.category) : "");
+      setWouldRecommend(true);
+      setSelectedProjectId("");
       setErrors({});
       setSuccess(false);
     }
-  }, [open, project?.id]);
+  }, [open, project?.id, project]);
 
-  // ESC zum Schliessen + Scroll-Lock
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -57,7 +77,6 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!project) return;
 
     const result = reviewSchema.safeParse({
       author_name: authorName,
@@ -65,6 +84,8 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
       email,
       rating,
       comment,
+      service_type: serviceType,
+      would_recommend: wouldRecommend,
     });
 
     if (!result.success) {
@@ -79,11 +100,13 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
     setErrors({});
     setSubmitting(true);
 
+    const projectId = project?.id ?? (selectedProjectId || null);
+
     try {
       const res = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...result.data, project_id: project.id }),
+        body: JSON.stringify({ ...result.data, project_id: projectId }),
       });
       const data = await res.json().catch(() => ({}));
 
@@ -104,7 +127,7 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
 
   return (
     <AnimatePresence>
-      {open && project && (
+      {open && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -112,7 +135,9 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
           className="fixed inset-0 z-[90] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          aria-label={`Projekt bewerten: ${project.title}`}
+          aria-label={
+            project ? `Projekt bewerten: ${project.title}` : "Bewertung abgeben"
+          }
         >
           <div
             className="absolute inset-0 bg-void/80 backdrop-blur-sm"
@@ -126,10 +151,9 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[4px] border border-mist bg-steel shadow-card no-scrollbar"
           >
-            {/* Header */}
             <div className="flex items-center justify-between border-b border-mist px-6 py-4">
               <h2 className="font-display text-2xl font-semibold text-bone">
-                Projekt bewerten
+                {project ? "Projekt bewerten" : "Bewertung abgeben"}
               </h2>
               <button
                 type="button"
@@ -141,26 +165,29 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
               </button>
             </div>
 
-            {/* Projekt-Info */}
-            <div className="flex items-center gap-4 border-b border-mist px-6 py-4">
-              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[3px] border border-mist bg-iron">
-                {projectImageSrc(project) ? (
-                  <Image
-                    src={projectImageSrc(project) as string}
-                    alt={project.title}
-                    fill
-                    sizes="56px"
-                    className="object-cover"
-                  />
-                ) : (
-                  <span className="font-display text-lg text-gold/50">TS</span>
-                )}
+            {project && (
+              <div className="flex items-center gap-4 border-b border-mist px-6 py-4">
+                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[3px] border border-mist bg-iron">
+                  {projectImageSrc(project) ? (
+                    <Image
+                      src={projectImageSrc(project) as string}
+                      alt={project.title}
+                      fill
+                      sizes="56px"
+                      className="object-cover object-center"
+                    />
+                  ) : (
+                    <span className="font-display text-lg text-gold/50">TS</span>
+                  )}
+                </div>
+                <div>
+                  <p className="eyebrow">{project.category}</p>
+                  <p className="font-display text-lg text-bone">
+                    {project.title}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="eyebrow">{project.category}</p>
-                <p className="font-display text-lg text-bone">{project.title}</p>
-              </div>
-            </div>
+            )}
 
             {success ? (
               <div className="flex flex-col items-center gap-4 px-6 py-14 text-center">
@@ -172,7 +199,36 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5" noValidate>
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 px-6 py-5"
+                noValidate
+              >
+                <Field label="Welche Leistung?" required error={errors.service_type}>
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                    {SERVICE_TILES.map((tile) => {
+                      const activeTile = serviceType === tile.key;
+                      return (
+                        <button
+                          type="button"
+                          key={tile.key}
+                          onClick={() => setServiceType(tile.key)}
+                          aria-pressed={activeTile}
+                          className={cn(
+                            "flex flex-col items-center gap-1 rounded-[3px] border px-1 py-3 text-center text-[0.65rem] leading-tight transition-colors",
+                            activeTile
+                              ? "border-gold bg-gold-dim text-gold-light"
+                              : "border-mist bg-iron text-ash hover:border-gold/50",
+                          )}
+                        >
+                          <span className="text-lg">{tile.icon}</span>
+                          <span>{tile.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Field>
+
                 <Field label="Ihr Name" required error={errors.author_name}>
                   <input
                     type="text"
@@ -219,6 +275,52 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
                   />
                 </Field>
 
+                <Field label="Würden Sie uns weiterempfehlen?">
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setWouldRecommend(true)}
+                      className={cn(
+                        "flex items-center justify-center gap-2 rounded-[3px] border px-3 py-2.5 text-sm font-medium transition-colors",
+                        wouldRecommend
+                          ? "border-success bg-success/15 text-success"
+                          : "border-mist bg-iron text-ash hover:border-success/50",
+                      )}
+                    >
+                      <ThumbsUp size={16} /> Ja
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWouldRecommend(false)}
+                      className={cn(
+                        "flex items-center justify-center gap-2 rounded-[3px] border px-3 py-2.5 text-sm font-medium transition-colors",
+                        !wouldRecommend
+                          ? "border-error bg-error/15 text-error"
+                          : "border-mist bg-iron text-ash hover:border-error/50",
+                      )}
+                    >
+                      <ThumbsDown size={16} /> Nein
+                    </button>
+                  </div>
+                </Field>
+
+                {!project && projects.length > 0 && (
+                  <Field label="Bezug zu einem Projekt? (optional)">
+                    <select
+                      className="field"
+                      value={selectedProjectId}
+                      onChange={(e) => setSelectedProjectId(e.target.value)}
+                    >
+                      <option value="">Kein bestimmtes Projekt</option>
+                      {projects.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.title}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                )}
+
                 <button
                   type="submit"
                   disabled={submitting}
@@ -240,6 +342,16 @@ export function ReviewModal({ project, open, onClose }: ReviewModalProps) {
       )}
     </AnimatePresence>
   );
+}
+
+/** Versucht aus der Projekt-Kategorie eine passende Leistungsart abzuleiten. */
+function guessServiceType(category: string): ServiceType | "" {
+  const c = category.toLowerCase();
+  if (c.includes("zweirad")) return "Zweiradtransport";
+  if (c.includes("umzug")) return "Umzug";
+  if (c.includes("netz") || c.includes("montage")) return "Netzmontage";
+  if (c.includes("fahrzeug")) return "Fahrzeugtransport";
+  return "";
 }
 
 function Field({

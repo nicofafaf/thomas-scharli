@@ -5,7 +5,7 @@ import { getSupabaseRouteClient } from "@/lib/supabase-server";
 import { isSupabaseConfigured } from "@/lib/supabase";
 
 const payloadSchema = reviewSchema.extend({
-  project_id: z.string().uuid("Ungültiges Projekt."),
+  project_id: z.string().uuid("Ungültiges Projekt.").nullable().optional(),
 });
 
 export async function POST(request: Request) {
@@ -25,8 +25,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: first }, { status: 422 });
   }
 
-  const { author_name, company, email, rating, comment, project_id } =
-    parsed.data;
+  const {
+    author_name,
+    company,
+    email,
+    rating,
+    comment,
+    project_id,
+    service_type,
+    would_recommend,
+  } = parsed.data;
 
   // Demo-Modus ohne Supabase: Erfolg simulieren
   const supabase = getSupabaseRouteClient();
@@ -43,12 +51,14 @@ export async function POST(request: Request) {
   }
 
   const { error } = await supabase.from("reviews").insert({
-    project_id,
+    project_id: project_id ?? null,
     author_name,
     company: company || null,
     email: email.toLowerCase(),
     rating,
     comment,
+    service_type,
+    would_recommend: would_recommend ?? true,
     approved: false,
   });
 

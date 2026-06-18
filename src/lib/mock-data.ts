@@ -146,8 +146,15 @@ export const MOCK_REVIEWS: Review[] = [
     comment:
       "Meine Vespa wurde absolut professionell verzurrt und kam ohne einen einzigen Kratzer an. Pünktlich, freundlich, top.",
     approved: true,
+    service_type: "Zweiradtransport",
+    would_recommend: true,
+    helpful_count: 12,
     created_at: "2024-04-12T10:00:00Z",
-    project: { id: "11111111-1111-1111-1111-111111111111", title: "Vespa sicher überführt" },
+    project: {
+      id: "11111111-1111-1111-1111-111111111111",
+      title: "Vespa sicher überführt",
+      category: "Zweirad-Transport",
+    },
   },
   {
     id: "a2222222-2222-2222-2222-222222222222",
@@ -159,8 +166,15 @@ export const MOCK_REVIEWS: Review[] = [
     comment:
       "Unser kompletter Umzug lief stressfrei. Alles sauber verpackt, nichts beschädigt und am Ende sogar wieder aufgebaut. Klare Empfehlung!",
     approved: true,
+    service_type: "Umzug",
+    would_recommend: true,
+    helpful_count: 8,
     created_at: "2024-02-22T10:00:00Z",
-    project: { id: "22222222-2222-2222-2222-222222222222", title: "Wohnungsumzug komplett" },
+    project: {
+      id: "22222222-2222-2222-2222-222222222222",
+      title: "Wohnungsumzug komplett",
+      category: "Umzug",
+    },
   },
   {
     id: "a3333333-3333-3333-3333-333333333333",
@@ -172,8 +186,15 @@ export const MOCK_REVIEWS: Review[] = [
     comment:
       "Die Ape ist ein seltenes Stück – hier wurde mit echtem Fingerspitzengefühl gearbeitet. So muss Fahrzeugtransport sein.",
     approved: true,
+    service_type: "Fahrzeugtransport",
+    would_recommend: true,
+    helpful_count: 6,
     created_at: "2023-09-15T10:00:00Z",
-    project: { id: "33333333-3333-3333-3333-333333333333", title: "Piaggio Ape Überführung" },
+    project: {
+      id: "33333333-3333-3333-3333-333333333333",
+      title: "Piaggio Ape Überführung",
+      category: "Fahrzeugtransport",
+    },
   },
   {
     id: "a4444444-4444-4444-4444-444444444444",
@@ -185,7 +206,46 @@ export const MOCK_REVIEWS: Review[] = [
     comment:
       "Das Elektromobil meiner Mutter wurde super sicher transportiert. Sehr rücksichtsvoll und zuverlässig – vielen Dank!",
     approved: true,
+    service_type: "Sonstiges",
+    would_recommend: true,
+    helpful_count: 4,
     created_at: "2023-11-23T10:00:00Z",
-    project: { id: "55555555-5555-5555-5555-555555555555", title: "Mobilitätshilfe transportiert" },
+    project: {
+      id: "55555555-5555-5555-5555-555555555555",
+      title: "Mobilitätshilfe transportiert",
+      category: "Spezialtransport",
+    },
+  },
+  {
+    id: "a5555555-5555-5555-5555-555555555555",
+    project_id: null,
+    author_name: "Hans-Peter Vogel",
+    company: "Vogel Logistics",
+    email: "hp.vogel@example.com",
+    rating: 5,
+    comment:
+      "Bereits zum dritten Mal beauftragt. Immer zuverlässig, immer pünktlich. Für uns der feste Partner für Fahrzeugüberführungen.",
+    approved: true,
+    service_type: "Fahrzeugtransport",
+    would_recommend: true,
+    helpful_count: 9,
+    created_at: "2024-07-28T11:00:00Z",
+    project: null,
+  },
+  {
+    id: "a6666666-6666-6666-6666-666666666666",
+    project_id: null,
+    author_name: "Markus Brenner",
+    company: "Brenner Elektro",
+    email: "m.brenner@example.com",
+    rating: 5,
+    comment:
+      "Netzmontage sauber ausgeführt und am Ende sogar beim Aufräumen geholfen. So stellt man sich einen Profi vor.",
+    approved: true,
+    service_type: "Netzmontage",
+    would_recommend: true,
+    helpful_count: 5,
+    created_at: "2024-09-20T09:00:00Z",
+    project: null,
   },
 ];

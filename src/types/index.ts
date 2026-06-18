@@ -12,6 +12,13 @@ export interface Project {
   created_at: string;
 }
 
+export type ServiceType =
+  | "Zweiradtransport"
+  | "Umzug"
+  | "Netzmontage"
+  | "Fahrzeugtransport"
+  | "Sonstiges";
+
 export interface Review {
   id: string;
   project_id: string | null;
@@ -21,9 +28,27 @@ export interface Review {
   rating: number;
   comment: string;
   approved: boolean;
+  service_type: ServiceType | null;
+  would_recommend: boolean;
+  helpful_count?: number;
   created_at: string;
   // Optional join (Projekt-Titel) fuer die Anzeige
-  project?: Pick<Project, "id" | "title"> | null;
+  project?: Pick<Project, "id" | "title" | "category"> | null;
+}
+
+export interface ReviewVote {
+  id: string;
+  review_id: string;
+  voter_fp: string;
+  created_at: string;
+}
+
+export interface ReviewStats {
+  averageRating: number;
+  totalCount: number;
+  distribution: { stars: number; count: number; percent: number }[];
+  recommendPercent: number;
+  byServiceType: { service: string; count: number }[];
 }
 
 export type SettingKey =
@@ -47,12 +72,14 @@ export type SiteSettings = Record<string, string>;
 
 // Eingaben fuer das oeffentliche Bewertungsformular
 export interface ReviewInput {
-  project_id: string;
+  project_id?: string | null;
   author_name: string;
-  company?: string;
+  company?: string | null;
   email: string;
   rating: number;
   comment: string;
+  service_type: ServiceType;
+  would_recommend?: boolean;
 }
 
 // Minimaler Supabase-Datenbanktyp fuer Typsicherheit der Clients

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { NAV_LINKS, SITE } from "@/lib/constants";
 import { LogoIcon } from "@/components/LogoIcon";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -47,16 +49,27 @@ export function Navbar() {
 
         {/* Desktop */}
         <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group relative text-sm font-medium text-ash transition-colors hover:text-bone"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "group relative text-sm font-medium transition-colors hover:text-bone",
+                  isActive ? "text-bone" : "text-ash",
+                )}
+              >
+                {link.label}
+                <span
+                  className={cn(
+                    "absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 group-hover:w-full",
+                    isActive ? "w-full" : "w-0",
+                  )}
+                />
+              </Link>
+            );
+          })}
           <MagneticButton
             href="/#kontakt"
             className="btn-gold !px-4 !py-2 text-sm"

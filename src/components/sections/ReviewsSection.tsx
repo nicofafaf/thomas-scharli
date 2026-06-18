@@ -1,15 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, ArrowUpRight } from "lucide-react";
 import { ReviewCard } from "@/components/ReviewCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { fadeUpVariant, staggerContainerFast, viewportOnce } from "@/lib/animations";
+import { computeReviewStats } from "@/lib/reviews";
 import type { Review } from "@/types";
 
 export function ReviewsSection({ reviews }: { reviews: Review[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const stats = computeReviewStats(reviews);
 
   function scroll(dir: "left" | "right") {
     const el = trackRef.current;
@@ -24,10 +27,17 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
     <section id="bewertungen" className="bg-steel py-24">
       <div className="container-tight">
         <div className="mb-12 flex items-end justify-between gap-6">
-          <SectionHeading
-            eyebrow="Stimmen unserer Kunden"
-            title="Was unsere Kunden sagen."
-          />
+          <div>
+            <SectionHeading
+              eyebrow="Stimmen unserer Kunden"
+              title="Was unsere Kunden sagen."
+            />
+            <span className="mt-4 inline-flex items-center gap-2 rounded-[2px] border border-gold/30 bg-gold-dim px-3 py-1.5 text-sm text-gold-light">
+              <Star size={14} className="fill-gold-light text-gold-light" />
+              {stats.averageRating.toFixed(1)} · {stats.totalCount}{" "}
+              {stats.totalCount === 1 ? "Bewertung" : "Bewertungen"}
+            </span>
+          </div>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <button
               type="button"
@@ -67,6 +77,16 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
           </motion.div>
         ))}
       </motion.div>
+
+      <div className="container-tight mt-10 text-center">
+        <Link
+          href="/bewertungen"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-gold transition-colors hover:text-gold-light"
+        >
+          Alle {stats.totalCount} Bewertungen lesen
+          <ArrowUpRight size={16} />
+        </Link>
+      </div>
     </section>
   );
 }

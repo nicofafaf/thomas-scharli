@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export const SERVICE_TYPES = [
+  "Zweiradtransport",
+  "Umzug",
+  "Netzmontage",
+  "Fahrzeugtransport",
+  "Sonstiges",
+] as const;
+
 export const reviewSchema = z.object({
   author_name: z
     .string()
@@ -20,6 +28,10 @@ export const reviewSchema = z.object({
     .string()
     .trim()
     .min(20, "Ihr Kommentar sollte mindestens 20 Zeichen lang sein."),
+  service_type: z.enum(SERVICE_TYPES, {
+    errorMap: () => ({ message: "Bitte wählen Sie eine Leistungsart." }),
+  }),
+  would_recommend: z.boolean().default(true),
 });
 
 export type ReviewFormValues = z.infer<typeof reviewSchema>;

@@ -22,7 +22,7 @@ export function whatsappLink(message: string = WHATSAPP_MESSAGE): string {
 export const NAV_LINKS = [
   { href: "/#leistungen", label: "Leistungen" },
   { href: "/#projekte", label: "Referenzen" },
-  { href: "/#bewertungen", label: "Bewertungen" },
+  { href: "/bewertungen", label: "Bewertungen" },
   { href: "/#ueber-uns", label: "Über uns" },
   { href: "/#kontakt", label: "Kontakt" },
 ] as const;
