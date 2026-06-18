@@ -146,7 +146,7 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="/media/hero/hero-poster.jpg"
+          href="/media/hero/hero-poster-v2.jpg"
           as="image"
         />
       </head>

@@ -16,8 +16,8 @@ import { staggerContainer, fadeUpVariant } from "@/lib/animations";
 import { parseStat } from "@/lib/utils";
 import type { SiteSettings } from "@/types";
 
-const HERO_POSTER = "/media/hero/hero-poster.jpg";
-const HERO_VIDEO_MP4 = "/media/hero/hero-video.mp4";
+const HERO_POSTER = "/media/hero/hero-poster-v2.jpg";
+const HERO_VIDEO_MP4 = "/media/hero/hero-video-v2.mp4";
 
 /**
  * Steuert den Hero-Hintergrund. true = Hintergrundvideo
