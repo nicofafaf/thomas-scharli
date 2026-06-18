@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -18,18 +18,22 @@ import type { SiteSettings } from "@/types";
 
 const HERO_POSTER = "/media/hero/hero-poster.jpg";
 const HERO_VIDEO_MP4 = "/media/hero/hero-video.mp4";
-const HERO_VIDEO_WEBM = "/media/hero/hero-video.webm";
 
 /**
- * Auf true setzen, sobald /public/media/hero/hero-video.mp4 (+ .webm)
- * hinterlegt ist – dann spielt das Hero ein Hintergrundvideo statt des
- * Standbilds.
+ * Steuert den Hero-Hintergrund. true = Hintergrundvideo
+ * (/public/media/hero/hero-video.mp4), false = Standbild + Licht-Canvas.
  */
-const HAS_HERO_VIDEO = false;
+const HAS_HERO_VIDEO = true;
 
 export function HeroSection({ settings }: { settings: SiteSettings }) {
   const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
+
+  // Bei prefers-reduced-motion das Video pausieren (Poster bleibt sichtbar)
+  useEffect(() => {
+    if (reduce && videoRef.current) videoRef.current.pause();
+  }, [reduce]);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -64,17 +68,18 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
       <motion.div style={{ y }} className="absolute inset-0 -z-10 scale-110">
         {HAS_HERO_VIDEO ? (
           <motion.video
+            ref={videoRef}
             className="h-full w-full object-cover"
-            autoPlay
+            autoPlay={!reduce}
             loop
             muted
             playsInline
             poster={HERO_POSTER}
+            style={{ filter: "brightness(0.72) saturate(1.1)" }}
             initial={reduce ? false : { scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: reduce ? 0 : 14, ease: "easeOut" }}
           >
-            <source src={HERO_VIDEO_WEBM} type="video/webm" />
             <source src={HERO_VIDEO_MP4} type="video/mp4" />
           </motion.video>
         ) : (
