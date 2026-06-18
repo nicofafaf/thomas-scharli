@@ -58,7 +58,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
       </div>
 
       <div className="border-t border-mist">
-        <div className="container-tight flex flex-col items-center justify-between gap-2 py-5 text-xs text-ash sm:flex-row">
+        <div className="container-tight flex flex-col items-center justify-between gap-2 py-5 pb-24 text-xs text-ash sm:flex-row sm:pb-5 sm:pr-44">
           <p>
             © {year} {SITE.name} · {SITE.tagline}
           </p>

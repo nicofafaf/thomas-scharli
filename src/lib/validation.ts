@@ -35,3 +35,35 @@ export const reviewSchema = z.object({
 });
 
 export type ReviewFormValues = z.infer<typeof reviewSchema>;
+
+export const INQUIRY_SERVICE_TYPES = [
+  "Zweiradtransport",
+  "Umzug",
+  "Fahrzeugtransport",
+  "Spezialtransport",
+  "Netzmontage",
+  "Sonstiges",
+] as const;
+
+export const inquirySchema = z.object({
+  name: z.string().trim().min(2, "Bitte geben Sie Ihren Namen an."),
+  phone: z
+    .string()
+    .trim()
+    .min(6, "Bitte geben Sie eine Telefonnummer an."),
+  email: z
+    .string()
+    .trim()
+    .email("Bitte geben Sie eine gültige E-Mail-Adresse ein.")
+    .optional()
+    .or(z.literal("")),
+  service_type: z.enum(INQUIRY_SERVICE_TYPES, {
+    errorMap: () => ({ message: "Bitte wählen Sie eine Leistung." }),
+  }),
+  from_location: z.string().trim().max(120).optional().or(z.literal("")),
+  to_location: z.string().trim().max(120).optional().or(z.literal("")),
+  date_wished: z.string().trim().max(120).optional().or(z.literal("")),
+  message: z.string().trim().max(2000).optional().or(z.literal("")),
+});
+
+export type InquiryFormValues = z.infer<typeof inquirySchema>;

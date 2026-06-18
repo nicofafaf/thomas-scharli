@@ -7,6 +7,7 @@ import {
   FolderKanban,
   Star,
   Settings as SettingsIcon,
+  Inbox,
   LogOut,
   Loader2,
 } from "lucide-react";
@@ -14,14 +15,16 @@ import toast from "react-hot-toast";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 import { DEFAULT_SETTINGS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import type { Project, Review, SiteSettings } from "@/types";
+import type { Inquiry, Project, Review, SiteSettings } from "@/types";
 import { ProjectsTab } from "./ProjectsTab";
 import { ReviewsTab } from "./ReviewsTab";
 import { SettingsTab } from "./SettingsTab";
+import { InquiriesTab } from "./InquiriesTab";
 
-type Tab = "projekte" | "bewertungen" | "einstellungen";
+type Tab = "anfragen" | "projekte" | "bewertungen" | "einstellungen";
 
 const TABS: { id: Tab; label: string; icon: typeof FolderKanban }[] = [
+  { id: "anfragen", label: "Anfragen", icon: Inbox },
   { id: "projekte", label: "Projekte", icon: FolderKanban },
   { id: "bewertungen", label: "Bewertungen", icon: Star },
   { id: "einstellungen", label: "Einstellungen", icon: SettingsIcon },
@@ -29,10 +32,11 @@ const TABS: { id: Tab; label: string; icon: typeof FolderKanban }[] = [
 
 export function AdminDashboard({ userEmail }: { userEmail: string }) {
   const router = useRouter();
-  const [tab, setTab] = useState<Tab>("projekte");
+  const [tab, setTab] = useState<Tab>("anfragen");
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
 
   const loadProjects = useCallback(async () => {
@@ -67,13 +71,28 @@ export function AdminDashboard({ userEmail }: { userEmail: string }) {
     }
   }, []);
 
+  const loadInquiries = useCallback(async () => {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+    const { data } = await supabase
+      .from("inquiries")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (data) setInquiries(data as Inquiry[]);
+  }, []);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
-      await Promise.all([loadProjects(), loadReviews(), loadSettings()]);
+      await Promise.all([
+        loadProjects(),
+        loadReviews(),
+        loadSettings(),
+        loadInquiries(),
+      ]);
       setLoading(false);
     })();
-  }, [loadProjects, loadReviews, loadSettings]);
+  }, [loadProjects, loadReviews, loadSettings, loadInquiries]);
 
   async function handleLogout() {
     const supabase = getSupabaseBrowserClient();
@@ -84,6 +103,7 @@ export function AdminDashboard({ userEmail }: { userEmail: string }) {
   }
 
   const pendingCount = reviews.filter((r) => !r.approved).length;
+  const newInquiriesCount = inquiries.filter((i) => i.status === "neu").length;
 
   return (
     <div className="min-h-screen bg-void">
@@ -134,6 +154,11 @@ export function AdminDashboard({ userEmail }: { userEmail: string }) {
                   {pendingCount}
                 </span>
               )}
+              {id === "anfragen" && newInquiriesCount > 0 && (
+                <span className="ml-auto rounded-full bg-gold px-1.5 text-xs font-bold text-void">
+                  {newInquiriesCount}
+                </span>
+              )}
             </button>
           ))}
         </nav>
@@ -147,6 +172,9 @@ export function AdminDashboard({ userEmail }: { userEmail: string }) {
             </div>
           ) : (
             <>
+              {tab === "anfragen" && (
+                <InquiriesTab inquiries={inquiries} onChange={loadInquiries} />
+              )}
               {tab === "projekte" && (
                 <ProjectsTab projects={projects} onChange={loadProjects} />
               )}

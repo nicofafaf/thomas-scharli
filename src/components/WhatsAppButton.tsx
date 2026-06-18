@@ -1,9 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { whatsappLink } from "@/lib/constants";
 
 export function WhatsAppButton() {
+  const pathname = usePathname();
+
+  // Im Admin-Bereich ausblenden (verdeckt sonst Footer-/UI-Elemente)
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <motion.a
       href={whatsappLink()}

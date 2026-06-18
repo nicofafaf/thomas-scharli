@@ -51,6 +51,41 @@ export interface ReviewStats {
   byServiceType: { service: string; count: number }[];
 }
 
+export type InquiryServiceType =
+  | "Zweiradtransport"
+  | "Umzug"
+  | "Fahrzeugtransport"
+  | "Spezialtransport"
+  | "Netzmontage"
+  | "Sonstiges";
+
+export type InquiryStatus = "neu" | "gesehen" | "erledigt";
+
+export interface Inquiry {
+  id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  service_type: InquiryServiceType;
+  from_location: string | null;
+  to_location: string | null;
+  date_wished: string | null;
+  message: string | null;
+  status: InquiryStatus;
+  created_at: string;
+}
+
+export interface InquiryInput {
+  name: string;
+  phone: string;
+  email?: string;
+  service_type: InquiryServiceType;
+  from_location?: string;
+  to_location?: string;
+  date_wished?: string;
+  message?: string;
+}
+
 export type SettingKey =
   | "hero_title"
   | "hero_subtitle"
@@ -102,6 +137,12 @@ export interface Database {
         Row: SiteSetting;
         Insert: SiteSetting;
         Update: Partial<SiteSetting>;
+        Relationships: [];
+      };
+      inquiries: {
+        Row: Inquiry;
+        Insert: InquiryInput & { status?: InquiryStatus };
+        Update: Partial<Inquiry>;
         Relationships: [];
       };
     };
