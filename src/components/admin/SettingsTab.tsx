@@ -222,6 +222,41 @@ export function SettingsTab({
             </Field>
           </div>
         </Group>
+
+        <Group title="Impressum">
+          <Field label="Name / Firma">
+            <input
+              className="field"
+              value={values.impressum_name ?? ""}
+              onChange={(e) => set("impressum_name", e.target.value)}
+            />
+          </Field>
+          <Field label="Straße + Hausnummer">
+            <input
+              className="field"
+              value={values.impressum_street ?? ""}
+              onChange={(e) => set("impressum_street", e.target.value)}
+            />
+          </Field>
+          <Field label="PLZ + Ort">
+            <input
+              className="field"
+              value={values.impressum_city ?? ""}
+              onChange={(e) => set("impressum_city", e.target.value)}
+            />
+          </Field>
+          <Field label="USt-ID (optional)">
+            <input
+              className="field"
+              value={values.impressum_vatid ?? ""}
+              onChange={(e) => set("impressum_vatid", e.target.value)}
+            />
+          </Field>
+          <p className="text-xs text-ash">
+            Diese Angaben erscheinen auf der Impressum-Seite. Die E-Mail wird aus
+            dem Bereich „Kontakt“ übernommen.
+          </p>
+        </Group>
       </div>
     </div>
   );

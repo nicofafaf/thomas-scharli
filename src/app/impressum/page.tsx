@@ -13,6 +13,11 @@ export const metadata: Metadata = {
 
 export default async function ImpressumPage() {
   const settings = await getSettings();
+  const name = settings.impressum_name || SITE.name;
+  const street = settings.impressum_street || "[Straße + Hausnummer eintragen]";
+  const city = settings.impressum_city || "[PLZ + Ort eintragen]";
+  const email = settings.contact_email || "[E-Mail eintragen]";
+  const vatId = settings.impressum_vatid;
 
   return (
     <>
@@ -37,11 +42,11 @@ export default async function ImpressumPage() {
                 Angaben gemäß § 5 TMG
               </h2>
               <p>
-                Thomas Scharli
+                {name}
                 <br />
-                [STRASSE + HAUSNUMMER]
+                {street}
                 <br />
-                [PLZ] [ORT]
+                {city}
               </p>
             </section>
 
@@ -50,30 +55,33 @@ export default async function ImpressumPage() {
               <p>
                 Telefon: {settings.contact_phone || SITE.phoneDisplay}
                 <br />
-                E-Mail: {settings.contact_email || "[ECHTE E-MAIL EINTRAGEN]"}
+                E-Mail: {email}
               </p>
             </section>
 
-            <section>
-              <h2 className="mb-3 text-base font-medium text-bone">
-                Umsatzsteuer-ID
-              </h2>
-              <p>
-                Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:
-                <br />
-                [UST-ID EINTRAGEN — falls vorhanden, sonst diesen Abschnitt
-                löschen]
-              </p>
-            </section>
+            {vatId ? (
+              <section>
+                <h2 className="mb-3 text-base font-medium text-bone">
+                  Umsatzsteuer-ID
+                </h2>
+                <p>
+                  Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:
+                  <br />
+                  {vatId}
+                </p>
+              </section>
+            ) : null}
 
             <section>
               <h2 className="mb-3 text-base font-medium text-bone">
                 Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
               </h2>
               <p>
-                Thomas Scharli
+                {name}
                 <br />
-                [ADRESSE]
+                {street}
+                {street && city ? ", " : ""}
+                {city}
               </p>
             </section>
 

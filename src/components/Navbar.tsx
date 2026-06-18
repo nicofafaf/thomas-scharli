@@ -38,7 +38,12 @@ export function Navbar() {
         >
           <LogoIcon size={36} />
           <span className="flex flex-col">
-            <span className="font-display text-xl font-semibold tracking-wide text-bone">
+            <span
+              className="font-display text-xl font-semibold tracking-wide text-bone"
+              style={{
+                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.9)",
+              }}
+            >
               {SITE.name}
             </span>
             <span className="text-[0.6rem] uppercase tracking-widest2 text-gold">
@@ -55,6 +60,9 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                style={{
+                  textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.9)",
+                }}
                 className={cn(
                   "group relative text-sm font-medium transition-colors hover:text-bone",
                   isActive ? "text-bone" : "text-ash",

@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
+import { HeroVideoCanvas } from "@/components/HeroVideoCanvas";
 import { SITE, STATS_LABELS } from "@/lib/constants";
 import { staggerContainer, fadeUpVariant } from "@/lib/animations";
 import { parseStat } from "@/lib/utils";
@@ -89,8 +90,11 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center"
+              style={{ objectPosition: "center 30%" }}
+              className="object-cover"
             />
+            {/* Cinematische Lichtanimation über dem Standbild */}
+            <HeroVideoCanvas />
           </motion.div>
         )}
       </motion.div>

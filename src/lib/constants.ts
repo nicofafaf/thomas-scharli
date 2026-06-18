@@ -6,7 +6,7 @@ export const SITE = {
   slogan: "Schnell. Sicher. Stressfrei.",
   foundedYear: 2024,
   // Zentral pflegbar – bei eigener Domain hier anpassen
-  url: "https://thomas-scharli-transporte.de",
+  url: "https://thomas-scharli.vercel.app",
   phoneDisplay: "0152 21331526",
   phoneTel: "+4915221331526",
   phoneIntl: "4915221331526", // fuer wa.me-Links (ohne + und Leerzeichen)
@@ -38,10 +38,14 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   contact_phone: "0152 21331526",
   contact_email: "info@thomas-scharli.de",
   contact_address: "Region Stuttgart",
-  stats_projects: "500",
-  stats_years: "2",
+  stats_projects: "50",
+  stats_years: "1",
   stats_satisfaction: "100",
   stats_sectors: "5",
+  impressum_name: "Thomas Scharli",
+  impressum_street: "",
+  impressum_city: "",
+  impressum_vatid: "",
 };
 
 export const STATS_LABELS = {

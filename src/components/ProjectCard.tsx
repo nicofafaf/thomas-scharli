@@ -60,7 +60,8 @@ export function ProjectCard({
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-center brightness-[0.75] saturate-[0.9] transition-all duration-700 group-hover:scale-[1.05] group-hover:brightness-[0.88] group-hover:saturate-[1.1]"
+            style={{ objectPosition: "center 20%" }}
+            className="object-cover brightness-[0.75] saturate-[0.9] transition-all duration-700 group-hover:scale-[1.05] group-hover:brightness-[0.88] group-hover:saturate-[1.1]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center border border-gold/30 bg-iron">

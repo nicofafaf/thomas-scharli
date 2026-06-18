@@ -24,7 +24,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? SITE.url),
   title: {
     default: "Thomas Scharli – Transport & Umzug Stuttgart",
     template: "%s | Thomas Scharli Transport",
@@ -48,20 +48,11 @@ export const metadata: Metadata = {
     siteName: "Thomas Scharli Transport & Umzug",
     title: "Thomas Scharli – Transport & Umzug Stuttgart",
     description: "Transport, Umzug und Netzmontagen. Schnell, sicher, stressfrei.",
-    images: [
-      {
-        url: "/media/og/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Thomas Scharli – Transport & Umzug Stuttgart",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Thomas Scharli – Transport & Umzug Stuttgart",
     description: "Transport, Umzug und Netzmontagen. Schnell, sicher, stressfrei.",
-    images: ["/media/og/og-image.jpg"],
   },
   robots: {
     index: true,

@@ -21,7 +21,32 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
     el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   }
 
-  if (reviews.length === 0) return null;
+  if (reviews.length === 0) {
+    return (
+      <section
+        id="bewertungen"
+        className="border-t border-mist bg-steel py-24"
+      >
+        <div className="container-tight text-center">
+          <p className="eyebrow justify-center">Kundenstimmen</p>
+          <h2 className="mt-4 font-display text-4xl font-semibold text-bone">
+            Was unsere Kunden sagen.
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-ash">
+            Noch keine Bewertungen vorhanden. Warst du zufrieden mit unserem
+            Service?
+          </p>
+          <Link
+            href="/bewertungen"
+            className="btn-gold mt-8 inline-flex items-center gap-2"
+          >
+            Jetzt als Erster bewerten
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="bewertungen" className="bg-steel py-24">

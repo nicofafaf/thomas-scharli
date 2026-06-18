@@ -60,10 +60,14 @@ INSERT INTO site_settings (key, value) VALUES
   ('contact_phone', '0152 21331526'),
   ('contact_email', 'info@thomas-scharli.de'),
   ('contact_address', 'Region Stuttgart'),
-  ('stats_projects', '500'),
-  ('stats_years', '2'),
+  ('stats_projects', '50'),
+  ('stats_years', '1'),
   ('stats_satisfaction', '100'),
-  ('stats_sectors', '5')
+  ('stats_sectors', '5'),
+  ('impressum_name', 'Thomas Scharli'),
+  ('impressum_street', ''),
+  ('impressum_city', ''),
+  ('impressum_vatid', '')
 ON CONFLICT (key) DO NOTHING;
 
 -- ---------------------------------------------------------------------------
