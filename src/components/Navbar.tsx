@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { NAV_LINKS, SITE } from "@/lib/constants";
-import { LogoIcon } from "@/components/LogoIcon";
+import { NAV_LINKS } from "@/lib/constants";
+import { Logo } from "@/components/Logo";
 import { MagneticButton } from "@/components/MagneticButton";
 import { cn } from "@/lib/utils";
 
@@ -33,23 +33,15 @@ export function Navbar() {
       <nav className="container-tight flex h-16 items-center justify-between md:h-20">
         <Link
           href="/"
-          className="group flex items-center gap-3 leading-none"
+          aria-label="Thomas Scharli – Startseite"
+          className="group leading-none transition-opacity hover:opacity-80"
           onClick={() => setOpen(false)}
         >
-          <LogoIcon size={36} />
-          <span className="flex flex-col">
-            <span
-              className="font-display text-xl font-semibold tracking-wide text-bone"
-              style={{
-                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.9)",
-              }}
-            >
-              {SITE.name}
-            </span>
-            <span className="text-[0.6rem] uppercase tracking-widest2 text-gold">
-              {SITE.tagline}
-            </span>
-          </span>
+          <Logo
+            size={40}
+            showText
+            textShadow={scrolled ? undefined : "0 1px 8px rgba(0,0,0,0.9)"}
+          />
         </Link>
 
         {/* Desktop */}

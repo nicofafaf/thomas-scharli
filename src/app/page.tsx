@@ -22,6 +22,10 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main>
+        <h1 className="sr-only">
+          Thomas Scharli – Transport &amp; Umzug Stuttgart | Vespa Transport ·
+          Zweiradtransport · Umzüge · Netzmontagen · Region Stuttgart
+        </h1>
         <HeroSection settings={settings} />
         <StatsSection settings={settings} />
         <ServicesSection />

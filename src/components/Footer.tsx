@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE, NAV_LINKS } from "@/lib/constants";
+import { Logo } from "@/components/Logo";
 import type { SiteSettings } from "@/types";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
@@ -9,12 +10,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
     <footer className="border-t border-mist bg-steel">
       <div className="container-tight grid gap-10 py-14 md:grid-cols-3">
         <div>
-          <p className="font-display text-2xl font-semibold text-bone">
-            {SITE.name}
-          </p>
-          <p className="mt-1 text-xs uppercase tracking-widest2 text-gold">
-            {SITE.tagline}
-          </p>
+          <Logo size={38} showText />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ash">
             Transport, Umzug und Montage in der Region Stuttgart. Schnell,
             sicher, stressfrei – wir bringen, was zählt.

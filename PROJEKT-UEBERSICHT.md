@@ -1,103 +1,64 @@
-# Thomas Scharli – Transport & Umzug · Projektstand
+# Thomas Scharli – Transport & Umzug · Projektstand (18.06.2026)
 
-_Stand: 18.06.2026 · Next.js 14 · TypeScript · Tailwind · Framer Motion · Supabase (live) · Vercel_
+## Überblick
+Cinematische Marketing-Website (Next.js 14, TypeScript, Tailwind, Framer Motion,
+Supabase live, Vercel). Design „Stahl & Licht" mit goldenen Akzenten.
+- Live: https://thomas-scharli.vercel.app
+- Admin: https://thomas-scharli.vercel.app/admin/login
+- Code: https://github.com/nicofafaf/thomas-scharli (public)
+- Backend: Supabase (DB + Auth + Storage), Ref teprdyvwyszvkfcwysfu
 
----
+## Seiten & Features
+- Startseite: Hero mit echtem Hintergrund-Video (Nacht-Autobahn, 720p, 2.9MB Loop,
+  autoplay/muted, Poster-Fallback, reduced-motion pausiert), Ken-Burns, Stats
+  (Count-Up ohne 0-Flash), Leistungen, Referenzen (Lightbox), Bewertungs-Karussell
+  + Score-Pill, Über uns, Kontakt, magnetische CTAs, fixer WhatsApp-Button.
+- /bewertungen (Google-Stil): Statistik-Panel (Schnitt, Verteilung,
+  % Weiterempfehlung, Leistungen), Filter (Sterne/Leistung/Suche/Sortierung),
+  Masonry-Grid mit Hilfreich-Votes, Direktbewertung ohne Projektbezug.
+- /projekte: vollständige Referenz-Galerie mit Lightbox + „Bewerten".
+- /impressum + /datenschutz: Daten kommen aus Supabase site_settings,
+  im Admin pflegbar.
+- Admin: Login (Supabase Auth), Projekte (CRUD, Drag&Drop, Bild-Upload),
+  Bewertungen (Freigabe, Bulk-Aktionen, Statistik), Einstellungen inkl.
+  Impressum-Gruppe (Name/Straße/Ort/USt-ID).
+- SEO/Branding: Metadata, OpenGraph (gebrandetes OG-Bild on-the-fly via
+  opengraph-image.tsx), sitemap.xml, robots.txt, LocalBusiness-JSON-LD,
+  TS-Favicon + Apple-Icon, cinematischer Lade-Screen.
 
-## 1. Überblick
+## Bewertungs-Flow
+Kunde bewertet → approved=false → erst nach Admin-Freigabe öffentlich.
+Schutz: 1 Bewertung pro E-Mail/Projekt bzw. E-Mail/Leistungsart, RLS, Validierung.
 
-Cinematische, emotionale Marketing-Website für **Thomas Scharli – Transport & Umzug**
-(Region Stuttgart) mit Referenz-Galerie, vollwertigem Bewertungssystem (inkl. eigener
-Bewertungsseite) und einem geschützten Admin-Bereich. Design-System „Stahl & Licht"
-mit goldenen Akzenten; Signature-Element „Goldener Scan".
+## Datenbank (Supabase, live)
+projects (9 Referenzen), reviews, site_settings, review_votes + View
+reviews_with_votes, Spalten service_type + would_recommend, Storage-Bucket
+project-images, Admin-User angelegt.
 
-- **Live (öffentlich):** https://thomas-scharli.vercel.app
-- **Admin-Login:** https://thomas-scharli.vercel.app/admin/login
-- **Code (GitHub, public):** https://github.com/nicofafaf/thomas-scharli
-- **Backend:** Supabase (PostgreSQL + Auth + Storage), Projekt-Ref `teprdyvwyszvkfcwysfu`
+## Deployment (WICHTIG)
+Vercel ist aktuell NICHT mit GitHub verbunden → git push deployt NICHT automatisch.
+Deploy läuft manuell über die Vercel-CLI (`vercel --prod`). Empfehlung: in Vercel
+unter Settings → Git das Repo nicofafaf/thomas-scharli verbinden, dann deployt
+jeder Push automatisch.
 
----
+## Erledigt (zuletzt – FINAL-AAA-Sprint)
+- Echtes Hero-Video eingebaut (von Pexels geladen, 46MB → 2.9MB komprimiert/getrimmt).
+- Navbar: Text-Shadow auf Links/Logo (transparent bleibt).
+- Count-Up ohne 0-Flash; Stats-Defaults realistischer (50+/1/100/5).
+- Demo-Bewertungen aus Code entfernt + Leer-State mit CTA.
+- Bilder: object-position center 20% (keine schwarzen Balken).
+- Cinematischer Lichtanimation-Canvas als Foto-Fallback (wenn kein Video).
+- OG-Bild on-the-fly, metadataBase auf Vercel-URL, Lade-Screen, Impressum aus DB.
+- Manuell auf Vercel Production deployt (Build OK), live verifiziert.
 
-## 2. Technik
-
-| Bereich | Wahl |
-|---|---|
-| Framework | Next.js 14 (App Router), TypeScript strict |
-| Styling | Tailwind CSS + CSS-Variablen, Design-System „Stahl & Licht" |
-| Animationen | Framer Motion (reduced-motion respektiert), Lenis Smooth-Scroll, Seitenübergänge |
-| Backend | Supabase (DB + Auth + Storage), RLS aktiv |
-| Deployment | Vercel (Auto-Deploy bei Push auf `main`) |
-| Fonts | Cormorant Garamond (Display) + DM Sans (Text) |
-
----
-
-## 3. Seiten & Features
-
-**Startseite (`/`)**
-- Hero (Standbild mit Ken-Burns-Zoom; Video-System vorbereitet via `HAS_HERO_VIDEO`)
-- Stats, Leistungen, Referenzen (mit Lightbox), Bewertungs-Karussell (+ Score-Pill), Über uns, Kontakt
-- Magnetische Haupt-CTAs, WhatsApp-Button (fixed)
-
-**Referenzen (`/projekte`)** – vollständige Galerie, Bilder per Lightbox, „Bewerten"-Funktion
-
-**Bewertungen (`/bewertungen`)** – eigene öffentliche Seite (Google-Stil)
-- Statistik-Panel: Schnitt + Sterne, Verteilung, „% Weiterempfehlung", Leistungs-Übersicht
-- Filter ohne Reload: Sterne, Leistungsart, Suche, Sortierung
-- Masonry-Grid: Initialen-Avatar, Leistungs-Badge, „Mehr lesen", „Hilfreich"-Votes, Highlight-Karte
-- Direktbewertung möglich (ohne Projektbezug)
-
-**Recht:** `/impressum` + `/datenschutz` (Platzhalter für echte Daten)
-
-**Admin (`/admin`)** – Login (Supabase Auth), Projekte (CRUD, Drag&Drop, Bild-Upload),
-Bewertungen (Freigabe, Bulk-Aktionen, Statistik), Einstellungen (Texte, Kontakt, Stats)
-
-**SEO/Branding:** Metadata, OpenGraph/Twitter, `sitemap.xml`, `robots.txt`,
-LocalBusiness-JSON-LD, generiertes „TS"-Favicon + Apple-Icon.
-
----
-
-## 4. Bewertungs-Flow (Moderation)
-
-Kunde bewertet (Projektkarte **oder** `/bewertungen`) → Speicherung mit `approved = false`
-→ **erst nach Freigabe durch Admin** öffentlich sichtbar. Schutz: 1 Bewertung pro
-E-Mail/Projekt bzw. E-Mail/Leistungsart, serverseitige Validierung, RLS in Supabase.
-
----
-
-## 5. Datenbank (Supabase, live)
-
-- `projects` (9 Referenzen geseedet), `reviews`, `site_settings`
-- `review_votes` (Hilfreich-Stimmen) + View `reviews_with_votes`
-- Spalten `service_type` + `would_recommend` an `reviews`
-- Storage-Bucket `project-images` für Admin-Uploads
-- Admin-User in Supabase Auth angelegt
-
----
-
-## 6. Erledigt (zuletzt)
-
-- ✅ Komplettes AAA-Finish: Recht, SEO, Logo/Favicon, WhatsApp, Lightbox, Smooth-Scroll,
-  Seitenübergänge, magnetische Buttons, Bildoptimierung
-- ✅ Supabase live verbunden (lokal + Vercel) inkl. Seed-Daten & Admin-User
-- ✅ Öffentliche Bewertungsseite `/bewertungen` + Direktbewertungen + Hilfreich-Votes
-- ✅ Gründungsjahr auf **2024** korrigiert
-- ✅ Auf GitHub gepusht & auf Vercel deployt
-
----
-
-## 7. Offen / To-do
-
-**🔴 Muss (vor „echtem" Launch):**
-1. Impressum/Datenschutz mit echten Daten füllen (Adresse, E-Mail, ggf. USt-ID)
-2. Demo-Bewertungen durch echte ersetzen oder entfernen (aktuell Beispieldaten)
-3. Echte E-Mail-Adresse hinterlegen (Footer/Kontakt/JSON-LD)
-
-**🟡 Sollte:**
-4. Hero-Video (`public/media/hero/hero-video.mp4` + `HAS_HERO_VIDEO = true`)
-5. Eigene Domain statt `…vercel.app` (in `SITE.url` eintragen)
-6. Bildqualität (Originale ohne schwarze Balken)
-7. Realistische Statistik-Zahlen prüfen (z. B. „500+ Transporte")
-
-**🟢 Nice:**
-8. Echtes Logo/Favicon, OG-Bild 1200×630
-9. Google Search Console + echte Google-Bewertungen
+## Offen / To-do (nur durch Thomas, kein Code)
+MUSS:
+1) Live-Stats im Admin auf echte Zahlen setzen (DB hat noch alte Werte).
+2) Die 4 alten Demo-Bewertungen im Admin → Bewertungen löschen.
+3) Impressum/Datenschutz im Admin mit echten Daten füllen (Adresse, E-Mail, USt-ID).
+SOLLTE:
+4) Vercel ↔ GitHub verbinden (Auto-Deploy).
+5) NEXT_PUBLIC_SITE_URL in Vercel setzen (fürs Teilen-Vorschaubild).
+6) Eigene Domain statt …vercel.app (in SITE.url + Env eintragen).
+NICE:
+7) Echtes Logo/Favicon, Google Search Console, echte Google-Bewertungen.

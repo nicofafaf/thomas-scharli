@@ -30,9 +30,11 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
 
-  // Bei prefers-reduced-motion das Video pausieren (Poster bleibt sichtbar)
+  // Reduced-Motion: Video pausieren (Poster bleibt), sonst sicher starten
   useEffect(() => {
-    if (reduce && videoRef.current) videoRef.current.pause();
+    if (!videoRef.current) return;
+    if (reduce) videoRef.current.pause();
+    else videoRef.current.play().catch(() => {});
   }, [reduce]);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -74,8 +76,9 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
             loop
             muted
             playsInline
+            preload="auto"
             poster={HERO_POSTER}
-            style={{ filter: "brightness(0.72) saturate(1.1)" }}
+            style={{ filter: "brightness(0.70) saturate(1.15)" }}
             initial={reduce ? false : { scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: reduce ? 0 : 14, ease: "easeOut" }}
@@ -124,7 +127,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
           Seit {SITE.foundedYear} · {SITE.tagline}
         </motion.p>
 
-        <h1 className="max-w-4xl font-display text-hero font-medium leading-[1.02] text-bone text-shadow-deep">
+        <div className="max-w-4xl font-display text-hero font-medium leading-[1.02] text-bone text-shadow-deep">
           {titleLines.map((line, i) => (
             <span key={i} className="block overflow-hidden">
               <motion.span variants={fadeUpVariant} className="block">
@@ -136,7 +139,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
               </motion.span>
             </span>
           ))}
-        </h1>
+        </div>
 
         <motion.p
           variants={fadeUpVariant}

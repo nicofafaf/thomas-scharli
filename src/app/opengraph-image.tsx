@@ -56,14 +56,40 @@ export default function Image() {
         <div
           style={{
             position: "absolute",
-            top: 52,
+            top: 44,
             right: 80,
-            fontSize: 16,
-            color: "#C8922A",
-            letterSpacing: "0.2em",
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
           }}
         >
-          TRANSPORT & UMZUG
+          <svg width="52" height="34" viewBox="0 0 220 140" fill="none">
+            <rect x="0" y="24" width="55" height="14" rx="3" fill="#C8922A" />
+            <rect x="0" y="46" width="40" height="14" rx="3" fill="#C8922A" />
+            <rect x="0" y="68" width="28" height="14" rx="3" fill="#C8922A" />
+            <rect x="63" y="14" width="66" height="14" rx="3" fill="#F2EDE6" />
+            <rect x="87" y="14" width="14" height="98" rx="3" fill="#F2EDE6" />
+            <rect x="63" y="98" width="66" height="14" rx="3" fill="#F2EDE6" />
+            <rect x="141" y="14" width="13" height="112" rx="3" fill="#F2EDE6" />
+            <path
+              d="M161 14 H205 Q219 14 219 28 V50 Q219 64 205 64 H173 Q161 64 161 76 V96 Q161 112 175 112 H219"
+              stroke="#F2EDE6"
+              strokeWidth="13"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <span style={{ fontSize: 17, fontWeight: 700, color: "#F2EDE6" }}>
+              Thomas Scharli
+            </span>
+            <span
+              style={{ fontSize: 11, color: "#C8922A", letterSpacing: "0.2em" }}
+            >
+              TRANSPORT & UMZUG
+            </span>
+          </div>
         </div>
         <div
           style={{
@@ -80,7 +106,7 @@ export default function Image() {
           <span>was zählt.</span>
         </div>
         <div style={{ fontSize: 26, color: "#8A8A96", marginBottom: 40 }}>
-          Transport · Umzug · Netzmontagen · Region Stuttgart
+          Vespa · Zweirad · Umzug · Netzmontagen — Region Stuttgart
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div

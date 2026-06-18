@@ -70,27 +70,58 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": SITE.url,
   name: "Thomas Scharli – Transport & Umzug",
   description:
-    "Transport, Umzug und Netzmontagen in der Region Stuttgart. Schnell, sicher, stressfrei.",
+    "Vespa Transport, Zweiradtransport, Umzüge und Netzmontagen in der Region Stuttgart. Schnell, sicher, stressfrei.",
+  url: SITE.url,
   telephone: SITE.phoneTel,
-  email: "info@thomas-scharli.de",
-  areaServed: {
-    "@type": "GeoCircle",
-    geoMidpoint: {
-      "@type": "GeoCoordinates",
-      latitude: 48.7758,
-      longitude: 9.1829,
-    },
-    geoRadius: "50000",
-  },
+  logo: `${SITE.url}/logo-original.jpeg`,
+  image: `${SITE.url}/opengraph-image`,
   address: {
     "@type": "PostalAddress",
     addressRegion: "Baden-Württemberg",
     addressCountry: "DE",
   },
-  url: SITE.url,
-  image: `${SITE.url}/media/og/og-image.jpg`,
+  areaServed: [
+    { "@type": "City", name: "Stuttgart" },
+    { "@type": "City", name: "Esslingen" },
+    { "@type": "City", name: "Ludwigsburg" },
+    { "@type": "City", name: "Böblingen" },
+    { "@type": "City", name: "Filderstadt" },
+    { "@type": "City", name: "Leinfelden-Echterdingen" },
+    { "@type": "City", name: "Waiblingen" },
+    { "@type": "City", name: "Fellbach" },
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Transportleistungen",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Vespa Transport Stuttgart" },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Zweiradtransport Stuttgart" },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Umzug Stuttgart" },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Fahrzeugtransport Stuttgart",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Netzmontagen Stuttgart" },
+      },
+    ],
+  },
   priceRange: "€€",
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
@@ -112,6 +143,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="de" className={`${dmSans.variable} ${cormorant.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          href="/media/hero/hero-poster.jpg"
+          as="image"
+        />
+      </head>
       <body className="bg-void text-bone antialiased">
         <PageLoadScan />
         <SmoothScroll>

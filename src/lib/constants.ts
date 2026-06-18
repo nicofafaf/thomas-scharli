@@ -61,23 +61,23 @@ export const STATS_LABELS = {
  */
 export const SERVICES = [
   {
-    title: "Zweirad-Transport",
-    text: "Vespas, Roller und Motorräder – sicher verzurrt und unbeschädigt ans Ziel.",
+    title: "Vespa & Zweiradtransport Stuttgart",
+    text: "Vespas, Motorräder, Roller und Mopeds – sicher verzurrt, vollständig versichert. Region Stuttgart und deutschlandweit.",
   },
   {
-    title: "Umzüge",
-    text: "Möbel und Hausrat sorgfältig verpackt, transportiert und aufgebaut.",
+    title: "Umzug Stuttgart & Region",
+    text: "Wohnungsumzüge, Büroumzüge und Möbeltransporte – sorgfältig verpackt und pünktlich am Ziel.",
   },
   {
-    title: "Fahrzeugtransport",
-    text: "Piaggio Ape, E-Mobile und Kleinfahrzeuge – verladen über Rampe, fixiert für jede Strecke.",
+    title: "Fahrzeugtransport Stuttgart",
+    text: "Piaggio Ape, E-Mobile und Kleinstfahrzeuge – über Auffahrrampe verladen, sicher fixiert.",
   },
   {
-    title: "Spezialtransport",
-    text: "Mobilitätshilfen, Treppenlifte und sensible Güter mit Fingerspitzengefühl.",
+    title: "Spezialtransport & Seniorenmobilität",
+    text: "Treppenlifte, Elektromobile und Mobilitätshilfen – mit Fingerspitzengefühl transportiert.",
   },
   {
-    title: "Netzmontagen",
+    title: "Netzmontagen Stuttgart",
     text: "Fachgerechte Montagen im Partnerverbund – zuverlässig und termintreu.",
   },
 ] as const;

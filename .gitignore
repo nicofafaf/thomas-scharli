@@ -29,6 +29,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# lokale Quell-Assets (Originale; App liest aus /public)
+/assets
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

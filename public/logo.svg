@@ -1,6 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <rect x="3" y="3" width="42" height="42" rx="3" stroke="#C8922A" stroke-width="1.5" fill="none"/>
-  <path d="M3 15 L3 3 L15 3" stroke="#C8922A" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-  <path d="M33 45 L45 45 L45 33" stroke="#C8922A" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-  <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="600" fill="#F2EDE6" letter-spacing="-0.5">TS</text>
+<svg width="220" height="140" viewBox="0 0 220 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Thomas Scharli – Transport & Umzug">
+  <rect x="0" y="24" width="55" height="14" rx="3" fill="#C8922A"/>
+  <rect x="0" y="46" width="40" height="14" rx="3" fill="#C8922A"/>
+  <rect x="0" y="68" width="28" height="14" rx="3" fill="#C8922A"/>
+  <rect x="63" y="14" width="66" height="14" rx="3" fill="#F2EDE6"/>
+  <rect x="87" y="14" width="14" height="98" rx="3" fill="#F2EDE6"/>
+  <rect x="63" y="98" width="66" height="14" rx="3" fill="#F2EDE6"/>
+  <rect x="141" y="14" width="13" height="112" rx="3" fill="#F2EDE6"/>
+  <path d="M161 14 H205 Q219 14 219 28 V50 Q219 64 205 64 H173 Q161 64 161 76 V96 Q161 112 175 112 H219" stroke="#F2EDE6" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
