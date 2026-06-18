@@ -4,8 +4,20 @@ export const SITE = {
   name: "Thomas Scharli",
   tagline: "Transport & Umzug",
   slogan: "Schnell. Sicher. Stressfrei.",
-  foundedYear: 2018,
+  foundedYear: 2024,
+  // Zentral pflegbar – bei eigener Domain hier anpassen
+  url: "https://thomas-scharli-transporte.de",
+  phoneDisplay: "0152 21331526",
+  phoneTel: "+4915221331526",
+  phoneIntl: "4915221331526", // fuer wa.me-Links (ohne + und Leerzeichen)
 } as const;
+
+export const WHATSAPP_MESSAGE =
+  "Hallo Thomas, ich hätte eine Anfrage bezüglich Transport/Umzug.";
+
+export function whatsappLink(message: string = WHATSAPP_MESSAGE): string {
+  return `https://wa.me/${SITE.phoneIntl}?text=${encodeURIComponent(message)}`;
+}
 
 export const NAV_LINKS = [
   { href: "/#leistungen", label: "Leistungen" },
@@ -27,7 +39,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   contact_email: "info@thomas-scharli.de",
   contact_address: "Region Stuttgart",
   stats_projects: "500",
-  stats_years: "8",
+  stats_years: "2",
   stats_satisfaction: "100",
   stats_sectors: "5",
 };

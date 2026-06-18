@@ -66,8 +66,19 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <p>
             © {year} {SITE.name} · {SITE.tagline}
           </p>
-          <div className="flex items-center gap-4">
-            <span>Alle Rechte vorbehalten</span>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href="/impressum"
+              className="text-ash/60 transition-colors hover:text-gold"
+            >
+              Impressum
+            </Link>
+            <Link
+              href="/datenschutz"
+              className="text-ash/60 transition-colors hover:text-gold"
+            >
+              Datenschutz
+            </Link>
             <Link
               href="/admin/login"
               className="text-ash/60 transition-colors hover:text-gold"

@@ -10,6 +10,8 @@ import type { Project } from "@/types";
 interface ProjectCardProps {
   project: Project;
   onReview?: (project: Project) => void;
+  /** Öffnet die Lightbox (Klick aufs Bild) */
+  onImageClick?: () => void;
   className?: string;
   /** Höheres Seitenverhältnis für Hero-/Wide-Karten im Masonry-Grid */
   aspect?: "tall" | "wide" | "square";
@@ -25,6 +27,7 @@ const aspectMap = {
 export function ProjectCard({
   project,
   onReview,
+  onImageClick,
   className,
   aspect = "square",
   priority = false,
@@ -42,7 +45,14 @@ export function ProjectCard({
         className,
       )}
     >
-      <div className={cn("relative w-full overflow-hidden", aspectMap[aspect])}>
+      <div
+        className={cn(
+          "relative w-full overflow-hidden bg-iron",
+          aspectMap[aspect],
+          onImageClick && imageSrc && "cursor-zoom-in",
+        )}
+        onClick={onImageClick}
+      >
         {imageSrc ? (
           <Image
             src={imageSrc}
@@ -50,7 +60,7 @@ export function ProjectCard({
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover brightness-[0.75] saturate-[0.9] transition-all duration-700 group-hover:scale-[1.05] group-hover:brightness-[0.88] group-hover:saturate-[1.1]"
+            className="object-cover object-center brightness-[0.75] saturate-[0.9] transition-all duration-700 group-hover:scale-[1.05] group-hover:brightness-[0.88] group-hover:saturate-[1.1]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center border border-gold/30 bg-iron">

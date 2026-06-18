@@ -61,7 +61,7 @@ INSERT INTO site_settings (key, value) VALUES
   ('contact_email', 'info@thomas-scharli.de'),
   ('contact_address', 'Region Stuttgart'),
   ('stats_projects', '500'),
-  ('stats_years', '8'),
+  ('stats_years', '2'),
   ('stats_satisfaction', '100'),
   ('stats_sectors', '5')
 ON CONFLICT (key) DO NOTHING;

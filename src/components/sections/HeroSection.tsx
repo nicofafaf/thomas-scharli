@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   motion,
   useScroll,
@@ -10,6 +9,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { MagneticButton } from "@/components/MagneticButton";
 import { SITE, STATS_LABELS } from "@/lib/constants";
 import { staggerContainer, fadeUpVariant } from "@/lib/animations";
 import { parseStat } from "@/lib/utils";
@@ -69,9 +69,9 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
             muted
             playsInline
             poster={HERO_POSTER}
-            initial={{ scale: 1.06 }}
+            initial={reduce ? false : { scale: 1.06 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 14, ease: "easeOut" }}
+            transition={{ duration: reduce ? 0 : 14, ease: "easeOut" }}
           >
             <source src={HERO_VIDEO_WEBM} type="video/webm" />
             <source src={HERO_VIDEO_MP4} type="video/mp4" />
@@ -79,9 +79,9 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
         ) : (
           <motion.div
             className="h-full w-full"
-            initial={{ scale: 1.06 }}
+            initial={reduce ? false : { scale: 1.06 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 12, ease: "easeOut" }}
+            transition={{ duration: reduce ? 0 : 12, ease: "easeOut" }}
           >
             <Image
               src={image}
@@ -89,7 +89,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
               fill
               priority
               sizes="100vw"
-              className="object-cover"
+              className="object-cover object-center"
             />
           </motion.div>
         )}
@@ -141,10 +141,10 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
           variants={fadeUpVariant}
           className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-6"
         >
-          <Link href="/#kontakt" className="btn-gold">
+          <MagneticButton href="/#kontakt" className="btn-gold">
             Jetzt Kontakt aufnehmen
             <ArrowRight size={18} />
-          </Link>
+          </MagneticButton>
 
           <div className="hidden h-12 w-px bg-mist sm:block" />
 

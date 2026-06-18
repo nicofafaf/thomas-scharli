@@ -2,6 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Cormorant_Garamond } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { PageLoadScan } from "@/components/PageLoadScan";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { PageTransition } from "@/components/PageTransition";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { SITE } from "@/lib/constants";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -20,29 +24,49 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thomas-scharli.de"),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Thomas Scharli – Transport & Umzug",
-    template: "%s | Thomas Scharli",
+    default: "Thomas Scharli – Transport & Umzug Stuttgart",
+    template: "%s | Thomas Scharli Transport",
   },
   description:
-    "Transport, Umzug und Montage in der Region Stuttgart. Vespas, Motorräder, Fahrzeuge, Mobilitätshilfen und komplette Umzüge – schnell, sicher, stressfrei.",
+    "Transport, Umzug und Netzmontagen in der Region Stuttgart. Schnell, sicher, stressfrei. Jetzt kostenloses Angebot anfragen: 0152 21331526.",
   keywords: [
-    "Transport",
-    "Umzug",
-    "Fahrzeugtransport",
+    "Transport Stuttgart",
+    "Umzug Stuttgart",
+    "Zweiradtransport",
     "Motorradtransport",
     "Vespa Transport",
-    "Netzmontagen",
-    "Stuttgart",
+    "Netzmontage",
     "Thomas Scharli",
   ],
+  authors: [{ name: "Thomas Scharli" }],
   openGraph: {
-    title: "Thomas Scharli – Transport & Umzug",
-    description: "Wir bringen, was zählt. Schnell, sicher, stressfrei.",
-    locale: "de_DE",
     type: "website",
-    images: [{ url: "/media/og/og-image.jpg", width: 1200, height: 630 }],
+    locale: "de_DE",
+    url: SITE.url,
+    siteName: "Thomas Scharli Transport & Umzug",
+    title: "Thomas Scharli – Transport & Umzug Stuttgart",
+    description: "Transport, Umzug und Netzmontagen. Schnell, sicher, stressfrei.",
+    images: [
+      {
+        url: "/media/og/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Thomas Scharli – Transport & Umzug Stuttgart",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thomas Scharli – Transport & Umzug Stuttgart",
+    description: "Transport, Umzug und Netzmontagen. Schnell, sicher, stressfrei.",
+    images: ["/media/og/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
   },
 };
 
@@ -52,6 +76,46 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Thomas Scharli – Transport & Umzug",
+  description:
+    "Transport, Umzug und Netzmontagen in der Region Stuttgart. Schnell, sicher, stressfrei.",
+  telephone: SITE.phoneTel,
+  email: "info@thomas-scharli.de",
+  areaServed: {
+    "@type": "GeoCircle",
+    geoMidpoint: {
+      "@type": "GeoCoordinates",
+      latitude: 48.7758,
+      longitude: 9.1829,
+    },
+    geoRadius: "50000",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "Baden-Württemberg",
+    addressCountry: "DE",
+  },
+  url: SITE.url,
+  image: `${SITE.url}/media/og/og-image.jpg`,
+  priceRange: "€€",
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    opens: "07:00",
+    closes: "20:00",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -59,7 +123,10 @@ export default function RootLayout({
     <html lang="de" className={`${dmSans.variable} ${cormorant.variable}`}>
       <body className="bg-void text-bone antialiased">
         <PageLoadScan />
-        {children}
+        <SmoothScroll>
+          <PageTransition>{children}</PageTransition>
+        </SmoothScroll>
+        <WhatsAppButton />
         <Toaster
           position="bottom-center"
           toastOptions={{
@@ -73,6 +140,10 @@ export default function RootLayout({
             success: { iconTheme: { primary: "#4CAF7D", secondary: "#1E1E22" } },
             error: { iconTheme: { primary: "#E05C5C", secondary: "#1E1E22" } },
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </body>
     </html>

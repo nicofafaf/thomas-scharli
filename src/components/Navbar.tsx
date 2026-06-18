@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { NAV_LINKS, SITE } from "@/lib/constants";
+import { LogoIcon } from "@/components/LogoIcon";
+import { MagneticButton } from "@/components/MagneticButton";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -29,14 +31,17 @@ export function Navbar() {
       <nav className="container-tight flex h-16 items-center justify-between md:h-20">
         <Link
           href="/"
-          className="group flex flex-col leading-none"
+          className="group flex items-center gap-3 leading-none"
           onClick={() => setOpen(false)}
         >
-          <span className="font-display text-xl font-semibold tracking-wide text-bone">
-            {SITE.name}
-          </span>
-          <span className="text-[0.6rem] uppercase tracking-widest2 text-gold">
-            {SITE.tagline}
+          <LogoIcon size={36} />
+          <span className="flex flex-col">
+            <span className="font-display text-xl font-semibold tracking-wide text-bone">
+              {SITE.name}
+            </span>
+            <span className="text-[0.6rem] uppercase tracking-widest2 text-gold">
+              {SITE.tagline}
+            </span>
           </span>
         </Link>
 
@@ -52,9 +57,12 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
-          <Link href="/#kontakt" className="btn-gold !py-2 !px-4 text-sm">
+          <MagneticButton
+            href="/#kontakt"
+            className="btn-gold !px-4 !py-2 text-sm"
+          >
             Kontakt aufnehmen
-          </Link>
+          </MagneticButton>
         </div>
 
         {/* Mobile Toggle */}
