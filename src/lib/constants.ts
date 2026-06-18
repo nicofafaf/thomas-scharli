@@ -6,7 +6,7 @@ export const SITE = {
   slogan: "Schnell. Sicher. Stressfrei.",
   foundedYear: 2024,
   // Zentral pflegbar – bei eigener Domain hier anpassen
-  url: "https://thomas-scharli.vercel.app",
+  url: "https://thomas-scharli.de",
   phoneDisplay: "0152 21331526",
   phoneTel: "+4915221331526",
   phoneIntl: "4915221331526", // fuer wa.me-Links (ohne + und Leerzeichen)

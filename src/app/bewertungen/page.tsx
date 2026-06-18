@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Bewertungen",
   description:
     "Echte Kundenstimmen zu Transport, Umzug und Netzmontagen von Thomas Scharli. Ungefiltert, von echten Aufträgen.",
+  alternates: { canonical: "/bewertungen" },
 };
 
 export default async function BewertungenPage() {

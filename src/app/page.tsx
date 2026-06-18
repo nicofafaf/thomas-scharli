@@ -7,7 +7,12 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
+import type { Metadata } from "next";
 import { getProjects, getApprovedReviews, getSettings } from "@/lib/data";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export const revalidate = 60;
 

@@ -8,9 +8,10 @@ import { getProjects, getSettings } from "@/lib/data";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Projekte",
+  title: "Referenzen",
   description:
-    "Unser vollständiges Portfolio: Gebäudereinigung, Haustechnik, Außenanlagen und Industrieservice in der Region Stuttgart.",
+    "Unsere Referenzen: Zweiradtransporte, Umzüge, Fahrzeugüberführungen und Spezialtransporte in der Region Stuttgart.",
+  alternates: { canonical: "/projekte" },
 };
 
 export default async function ProjektePage() {
