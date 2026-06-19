@@ -40,6 +40,7 @@ export function ServicesSection() {
                   {service.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">{service.text}</p>
+                <p className="mt-auto pt-2 text-xs text-ash/60">{service.area}</p>
               </motion.article>
             );
           })}

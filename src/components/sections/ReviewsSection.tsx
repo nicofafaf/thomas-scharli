@@ -5,14 +5,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, ArrowUpRight } from "lucide-react";
 import { ReviewCard } from "@/components/ReviewCard";
+import { MyHammerBadge } from "@/components/MyHammerBadge";
 import { SectionHeading } from "@/components/SectionHeading";
 import { fadeUpVariant, staggerContainerFast, viewportOnce } from "@/lib/animations";
-import { computeReviewStats } from "@/lib/reviews";
+import { MYHAMMER } from "@/lib/constants";
 import type { Review } from "@/types";
 
 export function ReviewsSection({ reviews }: { reviews: Review[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const stats = computeReviewStats(reviews);
 
   function scroll(dir: "left" | "right") {
     const el = trackRef.current;
@@ -33,14 +33,16 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
             Was unsere Kunden sagen.
           </h2>
           <p className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-ash">
-            Noch keine Bewertungen vorhanden. Warst du zufrieden mit unserem
-            Service?
+            Unsere Bewertungen findest du auch auf MyHammer:
           </p>
+          <div className="mx-auto mt-6 max-w-md">
+            <MyHammerBadge variant="full" />
+          </div>
           <Link
             href="/bewertungen"
             className="btn-gold mt-8 inline-flex items-center gap-2"
           >
-            Jetzt als Erster bewerten
+            Jetzt bewerten
             <ArrowUpRight size={18} />
           </Link>
         </div>
@@ -57,11 +59,15 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
               eyebrow="Stimmen unserer Kunden"
               title="Was unsere Kunden sagen."
             />
-            <span className="mt-4 inline-flex items-center gap-2 rounded-[2px] border border-gold/30 bg-gold-dim px-3 py-1.5 text-sm text-gold-light">
+            <a
+              href={MYHAMMER.url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="mt-4 inline-flex items-center gap-2 rounded-[2px] border border-gold/30 bg-gold-dim px-3 py-1.5 text-sm text-gold-light transition-colors hover:border-gold/60"
+            >
               <Star size={14} className="fill-gold-light text-gold-light" />
-              {stats.averageRating.toFixed(1)} · {stats.totalCount}{" "}
-              {stats.totalCount === 1 ? "Bewertung" : "Bewertungen"}
-            </span>
+              {MYHAMMER.rating} · {MYHAMMER.reviewCount} Bewertungen auf MyHammer
+            </a>
           </div>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <button
@@ -103,14 +109,23 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
         ))}
       </motion.div>
 
-      <div className="container-tight mt-10 text-center">
+      <div className="container-tight mt-10 flex flex-col items-center justify-center gap-3 text-center sm:flex-row sm:gap-8">
         <Link
           href="/bewertungen"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-gold transition-colors hover:text-gold-light"
         >
-          Alle {stats.totalCount} Bewertungen lesen
+          Alle Bewertungen lesen
           <ArrowUpRight size={16} />
         </Link>
+        <a
+          href={MYHAMMER.reviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-ash transition-colors hover:text-bone"
+        >
+          Weitere 260+ Bewertungen auf MyHammer
+          <ArrowUpRight size={16} />
+        </a>
       </div>
     </section>
   );

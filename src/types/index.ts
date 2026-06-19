@@ -93,10 +93,10 @@ export type SettingKey =
   | "contact_phone"
   | "contact_email"
   | "contact_address"
-  | "stats_projects"
-  | "stats_years"
+  | "stats_reviews"
+  | "stats_rating"
   | "stats_satisfaction"
-  | "stats_sectors";
+  | "stats_cities";
 
 export interface SiteSetting {
   key: string;

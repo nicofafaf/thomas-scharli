@@ -92,7 +92,18 @@ const jsonLd = {
     { "@type": "City", name: "Leinfelden-Echterdingen" },
     { "@type": "City", name: "Waiblingen" },
     { "@type": "City", name: "Fellbach" },
+    { "@type": "City", name: "München" },
+    { "@type": "City", name: "Berlin" },
+    { "@type": "City", name: "Köln" },
+    { "@type": "Country", name: "Deutschland" },
   ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "266",
+    bestRating: "5",
+    worstRating: "1",
+  },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Transportleistungen",

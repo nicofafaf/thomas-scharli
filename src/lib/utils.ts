@@ -28,9 +28,9 @@ export function formatDate(value: string | Date, locale = "de-DE"): string {
   }).format(date);
 }
 
-// "47" -> 47, "100%" -> 100, fehlertolerant
+// "47" -> 47, "100%" -> 100, "4.9★" -> 4.9, fehlertolerant
 export function parseStat(value: string | undefined, fallback = 0): number {
   if (!value) return fallback;
-  const parsed = parseInt(value.replace(/[^0-9-]/g, ""), 10);
+  const parsed = parseFloat(value.replace(/[^0-9.,-]/g, "").replace(",", "."));
   return Number.isNaN(parsed) ? fallback : parsed;
 }

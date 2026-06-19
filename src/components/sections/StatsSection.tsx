@@ -26,14 +26,19 @@ export function StatsSection({ settings }: { settings: SiteSettings }) {
             <motion.div
               key={key}
               variants={fadeUpVariant}
-              className="flex flex-col items-center text-center"
+              className="flex flex-col items-center px-2 text-center"
             >
               <span className="font-display text-5xl font-semibold text-bone md:text-6xl">
-                <CountUp to={value} suffix={meta.suffix} />
+                <CountUp to={value} suffix={meta.suffix} decimals={meta.decimals ?? 0} />
               </span>
               <span className="mt-2 text-xs uppercase tracking-widest2 text-ash">
                 {meta.label}
               </span>
+              {meta.desc && (
+                <span className="mt-1 text-[0.7rem] leading-snug text-ash/50">
+                  {meta.desc}
+                </span>
+              )}
             </motion.div>
           );
         })}

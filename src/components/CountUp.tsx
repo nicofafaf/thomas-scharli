@@ -7,9 +7,16 @@ interface CountUpProps {
   to: number;
   duration?: number;
   suffix?: string;
+  /** Nachkommastellen (z. B. 1 für "4.9"). Standard: 0 = ganze Zahl. */
+  decimals?: number;
 }
 
-export function CountUp({ to, duration = 1.8, suffix = "" }: CountUpProps) {
+export function CountUp({
+  to,
+  duration = 1.8,
+  suffix = "",
+  decimals = 0,
+}: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduce = useReducedMotion();
@@ -30,16 +37,19 @@ export function CountUp({ to, duration = 1.8, suffix = "" }: CountUpProps) {
     const tick = (now: number) => {
       const progress = Math.min((now - start) / (duration * 1000), 1);
       const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-      setValue(Math.round(eased * to));
+      setValue(eased * to);
       if (progress < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [inView, hasAnimated, to, duration, reduce]);
 
+  const formatted =
+    decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+
   return (
     <span ref={ref}>
-      {value}
+      {formatted}
       {suffix}
     </span>
   );

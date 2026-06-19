@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SITE, ABOUT_POINTS } from "@/lib/constants";
+import { MyHammerBadge } from "@/components/MyHammerBadge";
 import { fadeUpVariant, staggerContainer, viewportOnce } from "@/lib/animations";
 
 const ABOUT_IMAGE = "/media/about/einsatz.jpg";
@@ -47,31 +48,30 @@ export function AboutSection() {
           viewport={viewportOnce}
         >
           <motion.span variants={fadeUpVariant} className="eyebrow">
-            Über uns
+            Über Thomas Scharli
           </motion.span>
           <motion.h2
             variants={fadeUpVariant}
             className="mt-3 font-display text-4xl font-semibold leading-tight text-bone md:text-5xl"
           >
-            Handwerk mit Haltung.
+            266 Aufträge. Ein Anspruch.
           </motion.h2>
           <motion.p
             variants={fadeUpVariant}
             className="mt-5 text-base leading-relaxed text-ash"
           >
-            Seit {SITE.foundedYear} steht der Name Thomas Scharli für
-            verlässlichen Transport und stressfreie Umzüge in der Region
-            Stuttgart. Ob klassische Vespa, schwere Mobilitätshilfe oder
-            kompletter Hausstand – wir behandeln jedes Gut, als wäre es unser
-            eigenes.
+            Was auf MyHammer als kleiner Auftrag begann, ist heute ein
+            deutschlandweites Netzwerk zufriedener Kunden. Von Stuttgart nach
+            Berlin, von München nach Köln – Thomas Scharli transportiert, was
+            anderen zu kompliziert ist: Vespas, Harleys, Piaggio Apes,
+            Treppenlifte, komplette Haushalte.
           </motion.p>
           <motion.p
             variants={fadeUpVariant}
             className="mt-4 text-base leading-relaxed text-ash"
           >
-            Keine leeren Versprechen, sondern Ergebnisse: professionell verzurrt,
-            vollständig versichert, pünktlich am Ziel. Schnell, sicher,
-            stressfrei – genau wie es auf unserem Fahrzeug steht.
+            266 verifizierte Bewertungen. 4.9 von 5 Sternen. Kein einziger
+            beschädigter Transport.
           </motion.p>
 
           <motion.ul
@@ -96,6 +96,10 @@ export function AboutSection() {
               </motion.li>
             ))}
           </motion.ul>
+
+          <motion.div variants={fadeUpVariant} className="mt-8">
+            <MyHammerBadge variant="full" />
+          </motion.div>
         </motion.div>
       </div>
     </section>

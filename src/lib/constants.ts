@@ -15,6 +15,14 @@ export const SITE = {
 export const WHATSAPP_MESSAGE =
   "Hallo Thomas, ich hätte eine Anfrage bezüglich Transport/Umzug.";
 
+/** Verifiziertes MyHammer-Profil (266 Bewertungen, 4.9★). */
+export const MYHAMMER = {
+  url: "https://www.my-hammer.de/auftragnehmer/thomas-16",
+  reviewsUrl: "https://www.my-hammer.de/auftragnehmer/thomas-16/bewertungen",
+  rating: "4.9",
+  reviewCount: "266",
+} as const;
+
 export function whatsappLink(message: string = WHATSAPP_MESSAGE): string {
   return `https://wa.me/${SITE.phoneIntl}?text=${encodeURIComponent(message)}`;
 }
@@ -38,22 +46,38 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   contact_phone: "0152 21331526",
   contact_email: "info@thomas-scharli.de",
   contact_address: "Region Stuttgart",
-  stats_projects: "50",
-  stats_years: "1",
+  stats_reviews: "266",
+  stats_rating: "4.9",
   stats_satisfaction: "100",
-  stats_sectors: "5",
+  stats_cities: "27",
   impressum_name: "Thomas Scharli",
   impressum_street: "",
   impressum_city: "",
   impressum_vatid: "",
 };
 
-export const STATS_LABELS = {
-  stats_projects: { label: "Transporte", suffix: "+" },
-  stats_years: { label: "Jahre Erfahrung", suffix: "" },
-  stats_satisfaction: { label: "Zufriedenheit", suffix: "%" },
-  stats_sectors: { label: "Leistungen", suffix: "" },
-} as const;
+export type StatMeta = {
+  label: string;
+  suffix: string;
+  decimals?: number;
+  desc?: string;
+};
+
+export const STATS_LABELS: Record<string, StatMeta> = {
+  stats_reviews: { label: "Bewertungen", suffix: "+", desc: "verifiziert auf MyHammer" },
+  stats_rating: {
+    label: "Kundenbewertung",
+    suffix: "★",
+    decimals: 1,
+    desc: "von 5 Sternen",
+  },
+  stats_satisfaction: {
+    label: "Zufriedenheit",
+    suffix: "%",
+    desc: "kein Transport mit Schaden",
+  },
+  stats_cities: { label: "Städte", suffix: "+", desc: "Stuttgart bis Berlin" },
+};
 
 /**
  * Leistungen / Kategorien — entsprechen der Beschriftung des Firmenfahrzeugs:
@@ -63,28 +87,45 @@ export const SERVICES = [
   {
     title: "Vespa & Zweiradtransport Stuttgart",
     text: "Vespas, Motorräder, Roller und Mopeds – sicher verzurrt, vollständig versichert. Region Stuttgart und deutschlandweit.",
+    area: "Stuttgart · München · Berlin · und ganz Deutschland",
   },
   {
     title: "Umzug Stuttgart & Region",
     text: "Wohnungsumzüge, Büroumzüge und Möbeltransporte – sorgfältig verpackt und pünktlich am Ziel.",
+    area: "Region Stuttgart · Deutschlandweit auf Anfrage",
   },
   {
     title: "Fahrzeugtransport Stuttgart",
     text: "Piaggio Ape, E-Mobile und Kleinstfahrzeuge – über Auffahrrampe verladen, sicher fixiert.",
+    area: "Stuttgart · Köln · Berlin · deutschlandweit",
   },
   {
     title: "Spezialtransport & Seniorenmobilität",
     text: "Treppenlifte, Elektromobile und Mobilitätshilfen – mit Fingerspitzengefühl transportiert.",
+    area: "Region Stuttgart · Deutschlandweit auf Anfrage",
   },
   {
     title: "Netzmontagen Stuttgart",
     text: "Fachgerechte Montagen im Partnerverbund – zuverlässig und termintreu.",
+    area: "Region Stuttgart",
   },
 ] as const;
 
 export const ABOUT_POINTS = [
-  { label: "Schnell", text: "Kurze Reaktionszeiten, flexible Termine." },
-  { label: "Sicher", text: "Profi-Verzurrung, vollständig versichert." },
-  { label: "Stressfrei", text: "Wir packen an – Sie lehnen sich zurück." },
-  { label: "Erfahren", text: "Tausende Kilometer ohne Beanstandung." },
+  {
+    label: "Deutschlandweit",
+    text: "Stuttgart · Berlin · München · Köln · und mehr",
+  },
+  {
+    label: "Persönlich erreichbar",
+    text: "Thomas selbst – kein Callcenter, kein Subunternehmer",
+  },
+  {
+    label: "266 verifizierte Bewertungen",
+    text: "4.9★ auf MyHammer – unabhängig geprüft",
+  },
+  {
+    label: "Kein Schaden, je",
+    text: "Jedes Transportgut versichert und sicher fixiert",
+  },
 ] as const;

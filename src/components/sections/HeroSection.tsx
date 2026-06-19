@@ -10,10 +10,10 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
+import { MyHammerBadge } from "@/components/MyHammerBadge";
 import { HeroVideoCanvas } from "@/components/HeroVideoCanvas";
-import { SITE, STATS_LABELS } from "@/lib/constants";
+import { MYHAMMER } from "@/lib/constants";
 import { staggerContainer, fadeUpVariant } from "@/lib/animations";
-import { parseStat } from "@/lib/utils";
 import type { SiteSettings } from "@/types";
 
 const HERO_POSTER = "/media/hero/hero-poster-v2.jpg";
@@ -46,20 +46,13 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
   const title = settings.hero_title || "Wir bringen, was zählt.";
   const subtitle =
     settings.hero_subtitle ||
-    "Transport, Umzug und Montage – schnell, sicher, stressfrei.";
+    "Von Stuttgart bis Berlin – Zweiräder, Fahrzeuge, Umzüge. Über 266 zufriedene Kunden sprechen für sich.";
   const image = settings.hero_image || HERO_POSTER;
 
   // Titel in Zeilen aufteilen fuer gestaffelte Animation
   const titleLines = title.split(",").map((s, i, arr) =>
     i < arr.length - 1 ? `${s.trim()},` : s.trim(),
   );
-
-  const miniStats = (
-    ["stats_projects", "stats_years", "stats_satisfaction"] as const
-  ).map((key) => ({
-    value: `${parseStat(settings[key])}${STATS_LABELS[key].suffix}`,
-    label: STATS_LABELS[key].label,
-  }));
 
   return (
     <section
@@ -124,7 +117,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
         className="container-tight pb-24 pt-32"
       >
         <motion.p variants={fadeUpVariant} className="eyebrow mb-6 text-shadow-deep">
-          Seit {SITE.foundedYear} · {SITE.tagline}
+          {MYHAMMER.reviewCount} Bewertungen · {MYHAMMER.rating}★ · Deutschlandweit
         </motion.p>
 
         <div className="max-w-4xl font-display text-hero font-medium leading-[1.02] text-bone text-shadow-deep">
@@ -160,18 +153,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
 
           <div className="hidden h-12 w-px bg-mist sm:block" />
 
-          <div className="flex items-center gap-8">
-            {miniStats.map((stat) => (
-              <div key={stat.label} className="flex flex-col">
-                <span className="font-display text-2xl font-semibold text-bone">
-                  {stat.value}
-                </span>
-                <span className="text-[0.6rem] uppercase tracking-widest2 text-ash">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
+          <MyHammerBadge variant="compact" />
         </motion.div>
       </motion.div>
 

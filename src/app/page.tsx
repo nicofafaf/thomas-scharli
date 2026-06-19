@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { TrustBar } from "@/components/TrustBar";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
@@ -32,6 +33,7 @@ export default async function HomePage() {
           Zweiradtransport · Umzüge · Netzmontagen · Region Stuttgart
         </h1>
         <HeroSection settings={settings} />
+        <TrustBar />
         <StatsSection settings={settings} />
         <ServicesSection />
         <ProjectsSection projects={projects} limit={5} />

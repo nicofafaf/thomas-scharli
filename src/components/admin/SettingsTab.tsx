@@ -188,20 +188,20 @@ export function SettingsTab({
 
         <Group title="Statistiken">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <Field label="Transporte">
+            <Field label="Bewertungen">
               <input
                 className="field"
                 inputMode="numeric"
-                value={values.stats_projects ?? ""}
-                onChange={(e) => set("stats_projects", e.target.value)}
+                value={values.stats_reviews ?? ""}
+                onChange={(e) => set("stats_reviews", e.target.value)}
               />
             </Field>
-            <Field label="Jahre">
+            <Field label="Kundenbewertung (z. B. 4.9)">
               <input
                 className="field"
-                inputMode="numeric"
-                value={values.stats_years ?? ""}
-                onChange={(e) => set("stats_years", e.target.value)}
+                inputMode="decimal"
+                value={values.stats_rating ?? ""}
+                onChange={(e) => set("stats_rating", e.target.value)}
               />
             </Field>
             <Field label="Zufriedenheit %">
@@ -212,12 +212,12 @@ export function SettingsTab({
                 onChange={(e) => set("stats_satisfaction", e.target.value)}
               />
             </Field>
-            <Field label="Leistungen">
+            <Field label="Städte">
               <input
                 className="field"
                 inputMode="numeric"
-                value={values.stats_sectors ?? ""}
-                onChange={(e) => set("stats_sectors", e.target.value)}
+                value={values.stats_cities ?? ""}
+                onChange={(e) => set("stats_cities", e.target.value)}
               />
             </Field>
           </div>

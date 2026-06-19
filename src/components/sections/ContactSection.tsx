@@ -35,7 +35,6 @@ const InquiryForm = dynamic(
 
 export function ContactSection({ settings }: { settings: SiteSettings }) {
   const phone = settings.contact_phone;
-  const address = settings.contact_address;
 
   return (
     <section id="kontakt" className="relative overflow-hidden border-t border-mist bg-steel py-28">
@@ -112,10 +111,10 @@ export function ContactSection({ settings }: { settings: SiteSettings }) {
                 <span className="mb-1 block text-xs uppercase tracking-widest2 text-ash">
                   Einsatzgebiet
                 </span>
-                <span className="block text-sm text-bone">
-                  Stuttgart · Esslingen · Ludwigsburg
+                <span className="block text-sm text-bone">Stuttgart &amp; Region</span>
+                <span className="mt-0.5 block text-xs text-ash">
+                  Deutschlandweit auf Anfrage · Berlin · München · Köln
                 </span>
-                <span className="mt-0.5 block text-xs text-ash">{address}</span>
               </span>
             </div>
 

@@ -135,6 +135,99 @@ export const MOCK_PROJECTS: Project[] = [
   },
 ];
 
-// Bewusst leer: keine erfundenen Bewertungen. Echte Bewertungen kommen aus
-// Supabase und werden erst nach Freigabe oeffentlich angezeigt.
-export const MOCK_REVIEWS: Review[] = [];
+/**
+ * Echte, öffentlich einsehbare MyHammer-Bewertungen von Thomas Scharli
+ * (4.9★ · 266 Bewertungen). Werden im Demo-Modus angezeigt; in Produktion
+ * kommen die freigegebenen Bewertungen aus Supabase.
+ */
+export const MOCK_REVIEWS: Review[] = [
+  {
+    id: "mh-1",
+    project_id: null,
+    author_name: "Bernd aus Calw",
+    company: null,
+    email: "",
+    rating: 5,
+    comment:
+      "Sehr zuverlässig, ein Unternehmer der selbstständig handelt. Bin sehr glücklich – meine erste MyHammer-Erfahrung ist absolut positiv. Thomas ist weiter zu empfehlen.",
+    service_type: "Fahrzeugtransport",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-10-29T10:00:00Z",
+  },
+  {
+    id: "mh-2",
+    project_id: null,
+    author_name: "Kunde aus Memmingen",
+    company: null,
+    email: "",
+    rating: 5,
+    comment:
+      "Es ging alles sehr schnell, sofort und zuverlässig reagiert und geliefert. Alles perfekt! Wir haben eine Matratze von Berlin nach Bayern transportieren lassen – war innerhalb von 2 Tagen da!",
+    service_type: "Umzug",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-10-30T09:00:00Z",
+  },
+  {
+    id: "mh-3",
+    project_id: null,
+    author_name: "E. aus Hasloch",
+    company: null,
+    email: "",
+    rating: 5,
+    comment:
+      "Sehr gute Kommunikation im Vorfeld des Transports, faires Preisangebot, alles eingehalten und den Schrank ohne Schaden transportiert. Vielen Dank!",
+    service_type: "Umzug",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-11-05T14:00:00Z",
+  },
+  {
+    id: "mh-4",
+    project_id: null,
+    author_name: "Kunde aus Bürstadt",
+    company: null,
+    email: "",
+    rating: 5,
+    comment:
+      "Guter freundlicher Kontakt, direkte Auslieferung, alles super – immer wieder!",
+    service_type: "Fahrzeugtransport",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-10-28T11:00:00Z",
+  },
+  {
+    id: "mh-5",
+    project_id: null,
+    author_name: "Barbara Kaiser, München",
+    company: null,
+    email: "",
+    rating: 5,
+    comment:
+      "Thomas war nett und flexibel – ich danke ihm für den Transport und alles!",
+    service_type: "Umzug",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-11-06T08:00:00Z",
+  },
+  {
+    id: "mh-6",
+    project_id: null,
+    author_name: "Kunde aus Buchbach",
+    company: null,
+    email: "",
+    rating: 5,
+    comment: "Zuverlässig, pünktlich, geht pfleglich mit den Sachen um.",
+    service_type: "Umzug",
+    would_recommend: true,
+    helpful_count: 0,
+    approved: true,
+    created_at: "2025-11-01T10:00:00Z",
+  },
+];
